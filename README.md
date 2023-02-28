@@ -88,7 +88,7 @@ Next we will need to generate Out-Degree to separate our initial user lists from
 
 Now we can use the value of Out-Degree to visually separate data under the Appearance tab. I selected a green color for nodes with Out-Degree equal to 0 (the accounts which we got from Twitter API)
 
-![Screen Shot 2023-02-28 at 17 56 39](https://user-images.githubusercontent.com/10202752/221928552-34092d4e-2dfe-46c1-8c90-ebd272699f0c.png)
+![Screen Shot 2023-02-28 at 18 20 05](https://user-images.githubusercontent.com/10202752/221929045-8101fa60-1a2a-4b08-8d64-9564136f3adf.png)
 
 We can also play with other values such as make the size of each node reflect it's In-Degree value (acocunts followed by more people will have larger circles).
 
