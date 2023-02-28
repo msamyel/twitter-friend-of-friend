@@ -76,19 +76,19 @@ First, import the result csv file as Edge table, with edge type set as `Directed
 
 Second, switch to the Data Laboratory tab, and under `Copy data to another column` select the column `Id` and ask Gephi to copy its contents to column `Label`. This will allow us to display Twitter usernames in the graph.
 
-Screenshot TBA
+![Screen Shot 2023-02-28 at 17 35 46](https://user-images.githubusercontent.com/10202752/221928398-bb23b4ea-50f9-4212-974e-709c05fc9b94.png)
 
 Switch back to the Overview tab. If you have too many data points, you might want to filter out accounts with a small number of connections. I use the `Topology/K-core` filter. 
 
-Screenshot TBA
+![Screen Shot 2023-02-28 at 17 37 43](https://user-images.githubusercontent.com/10202752/221928454-d2064d03-f96b-4c1f-b9c3-59c0e703aab9.png)
 
 Next we will need to generate Out-Degree to separate our initial user lists from the users who weren't in the original list and we retrieved them with this script. Switch the Filters tab over to the Statistics tab and next to `Degree` press the Run button.
 
-Screenshot TBA
+![Screen Shot 2023-02-28 at 17 55 39](https://user-images.githubusercontent.com/10202752/221928492-c1c75dc9-cf18-4742-9dbe-a133e951c7cc.png)
 
 Now we can use the value of Out-Degree to visually separate data under the Appearance tab. I selected a green color for nodes with Out-Degree equal to 0 (the accounts which we got from Twitter API)
 
-Screenshot TBA
+![Screen Shot 2023-02-28 at 17 56 39](https://user-images.githubusercontent.com/10202752/221928552-34092d4e-2dfe-46c1-8c90-ebd272699f0c.png)
 
 We can also play with other values such as make the size of each node reflect it's In-Degree value (acocunts followed by more people will have larger circles).
 
@@ -98,8 +98,7 @@ Depending on your data, the result could look something like this. (Actual Twitt
 
 Gephi helps us view data in an interactive way. We can for example highlight a target account and see all the source accounts which are following it.
 
-Screenshot TBA
-
+![Screen Shot 2023-02-28 at 18 01 27](https://user-images.githubusercontent.com/10202752/221928626-59974d4d-7f77-4ca3-b45e-1e2f54d99ce9.png)
 
 ## Visualizing data without Gephi
 
