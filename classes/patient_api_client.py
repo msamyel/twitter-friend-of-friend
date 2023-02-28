@@ -4,6 +4,7 @@
 ###
 import os
 import time
+from datetime import datetime
 from dotenv import load_dotenv
 from TwitterAPI import TwitterAPI
 
@@ -39,9 +40,11 @@ class PatientApiClient:
     def handle_request_json(self, request_type, request, params=None):
         assert (request_type in ["following", "username"])
         if self.current_request_count[request_type] >= self.MAX_REQUEST_NUM[request_type]:
-            print(f"Reached API limit, sleeping for {self.WAIT_MINUTES} minutes...")
+            now: str = datetime.now().strftime("%H:%M:%S")
+            print(f"\n{now} | Reached API limit, sleeping for {self.WAIT_MINUTES} minutes...\n")
+            now = datetime.now().strftime("%H:%M:%S")
             time.sleep(self.WAIT_MINUTES * 60)
-            print(f"Sleep finished, resuming work...")
+            print(f"\n{now} | Sleep finished, resuming work...\n")
             self.reset_request_count()
 
         self.current_request_count[request_type] += 1
