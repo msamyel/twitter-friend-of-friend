@@ -68,6 +68,12 @@ someTwitterUser,OtherTwitterUserThisUserIsFollowing
 ...
 ```
 
+Additionaly, a version of the sourcefile with missing usernames added to it will be saved as `output/source_accounts.csv`
+
+## Optional flags
+
+- Use `--usernames-only` flag to only retrieve usernames for your follower list.
+
 ## Visualizing data with Gephi
 
 I am only a beginner with Gephi, however I will share some of the steps I learned to be useful for visualizing the results in Gephi.

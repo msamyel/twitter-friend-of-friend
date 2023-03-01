@@ -3,6 +3,7 @@ import sys
 
 # local components
 from classes.patient_api_client import PatientApiClient
+from classes.options import Options
 
 
 # method is unused in current project
@@ -57,17 +58,16 @@ def get_username(api: PatientApiClient, user_id):
     return username
 
 
-def read_source_ids_from_file():
-    if len(sys.argv) < 2:
+def read_source_ids_from_file(sourcefile_path: str):
+    if not sourcefile_path:
         print("Please provide a filename to read source id list from!")
         return None
 
-    source_id_filename: str = sys.argv[1]
-    if not os.path.exists(source_id_filename):
-        print(f"Specified file {source_id_filename} does not exist.")
+    if not os.path.exists(sourcefile_path):
+        print(f"Specified file {sourcefile_path} does not exist.")
         return None
 
-    with open(source_id_filename, 'r') as f:
+    with open(sourcefile_path, 'r') as f:
         source_ids = f.read().splitlines()
 
     return source_ids
@@ -112,13 +112,14 @@ def create_output_folder_if_not_exists():
 #todo add option to only export twitter user ids, without usernames
 def main():
     api: PatientApiClient = PatientApiClient()
+    options: Options = Options()
 
     if not api.is_authenticated:
         sys.stderr.writelines("Could not authenticate TwitterAPI v2 client.\n"
                               "Please check that .env file contains correct authentication data.\n")
         return
 
-    source_lines = read_source_ids_from_file()
+    source_lines = read_source_ids_from_file(sourcefile_path=options.sourcefile_path)
     if source_lines is None:
         return
 
@@ -130,6 +131,10 @@ def main():
     #write id list with usernames, so that this can be reused later
     #todo: only perform if specified in command line
     write_ids_with_usernames(source_dict)
+    
+    if options.is_get_usernames_only:
+        return
+        
 
     with open("output/result.csv", 'w+') as f:
         f.write("source,target\n")
