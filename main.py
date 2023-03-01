@@ -1,6 +1,8 @@
 import os
 import sys
 
+from datetime import datetime, timedelta 
+
 # local components
 from classes.patient_api_client import PatientApiClient
 from classes.options import Options
@@ -109,6 +111,26 @@ def create_output_folder_if_not_exists():
         os.makedirs("output")
 
 
+def estimate_running_time(source_lines: list, options: Options):
+    source_id_count: int = len(source_lines)
+    split_line = [x.split(',') for x in source_lines]
+    username_missing_count: int = len([x for x in split_line if not len(split_line) > 1 and not split_line[1]])
+    
+    api_cycle_count: int = 0
+    api_cycle_count += ((username_missing_count - 1) // 300)
+    if not options.is_get_usernames_only:
+        api_cycle_count += ((source_id_count - 1) // 15)
+    
+    if api_cycle_count < 1:
+        print('\n\nThe procedure should only take several seconds.\n\n')
+        return
+    
+    minute_count: int = api_cycle_count * 16
+    completion_time = (datetime.now() + timedelta(minutes=minute_count)).strftime("%H:%M:%S")
+    print(f'\n\nThe procedure will take at least {minute_count} minutes')
+    print('    (Actual duration might be longer when analyzing accounts who follow many other accounts)')
+    print(f'\nEarliest expected completion time: \n    {completion_time}\n\n')
+
 #todo add option to only export twitter user ids, without usernames
 def main():
     api: PatientApiClient = PatientApiClient()
@@ -123,8 +145,13 @@ def main():
     if source_lines is None:
         return
 
+    estimate_running_time(source_lines, options)
+    
+    if options.is_estimate_only:
+        return
+    
     create_output_folder_if_not_exists()
-
+    
     # get usernames for missing ids
     source_dict = create_source_dictionary(api, source_lines)
 
